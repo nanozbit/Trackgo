@@ -1,10 +1,8 @@
 version: "3.7" 
 services:
     postgres:
-        build:
-            context: .
-            dockerfile: Dockerfile
         container_name: postgres
+        image: postgres
         restart: always
         environment:
             POSTGRES_PASSWORD: "track4go"
@@ -17,9 +15,18 @@ services:
             postgres_network:
                 aliases:
                     - postgres_host
+    backend:
+         container_name: api
+         image: mcr.microsoft.com/dotnet/sdk
+         restart: always
+         ports:
+             - "5002:5001"
+         links: 
+         - postgres
+
 volumes: 
     pgdata: {}
 networks:
     postgres_network:
-        name: postgres_net
+        name: trackgo_net
         driver: bridge
