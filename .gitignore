@@ -362,7 +362,8 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 
-#compile folders
+#compile folders and migrations
 
 bin/
 obj/
+Migrations/

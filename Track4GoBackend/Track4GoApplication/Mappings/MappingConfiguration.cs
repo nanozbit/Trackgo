@@ -12,6 +12,7 @@ namespace Track4GoApplication.Mappings
             return new MapperConfiguration(cfg =>
            {
                cfg.AddProfile( new UserDomainToApplicationProfile());
+               cfg.AddProfile(new UserViewModelToDomainProfile());
            });
         }
     }

@@ -14,7 +14,6 @@ namespace Track4GoIoC
         {
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUserRepository, UserRepository>();
-
             services.AddScoped<UserContext>();
         }
         
