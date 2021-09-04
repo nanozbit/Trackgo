@@ -10,5 +10,7 @@ namespace Track4GoApplication.Interface
     {
         public IEnumerable<UserViewModel> GetUser();
         public void Create(UserViewModel userViewModel);
+        public void Update(UserViewModel userViewModel);
+        public void Delete(Guid ID_User);
     }
 }

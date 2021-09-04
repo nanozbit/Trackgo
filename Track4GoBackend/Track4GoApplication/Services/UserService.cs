@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Track4GoApplication.Interface;
@@ -25,11 +26,20 @@ namespace Track4GoApplication.Services
             _userRepository.Add(userEntity);
         }
 
+        public void Delete(Guid Id_User)
+        {
+            _userRepository.Delete(Id_User);
+        }
 
         public IEnumerable<UserViewModel> GetUser()
         {
             return _userRepository.GetUser().ProjectTo<UserViewModel>(_mapper.ConfigurationProvider);
         }
-    
+
+        public void Update(UserViewModel request)
+        {
+            var userEntity = _mapper.Map<UserViewModel, UserEntity>(request);
+            _userRepository.Update(userEntity);
+        }
     }
 }

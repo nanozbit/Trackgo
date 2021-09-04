@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Track4GoDomain.Entities;
 
@@ -11,5 +12,6 @@ namespace Track4GoDomain.Interfaces
         public void Add(UserEntity userEntity);
 
         public void Update(UserEntity userEntity);
+        public void Delete(Guid Id_User);
     }
 }

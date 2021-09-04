@@ -26,19 +26,48 @@ namespace Track4GoApi.Controllers
         }
         
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] UserViewModel userViewModel)
+        public IActionResult Post([FromBody] UserViewModel request)
         {
-            if (userViewModel == null)
+            if (request == null)
             {
                 return BadRequest();
             }
 
-            if(userViewModel.Id_User == Guid.Empty)
+            if(request.Id_User == Guid.Empty)
             {
                 ModelState.AddModelError("Id", "ID_user can't be empty");
             }
-            _userService.Create(userViewModel);
+            _userService.Create(request);
             return Created("Created a new user", true);
         }
+
+        [HttpPut]
+        public IActionResult Put([FromBody] UserViewModel request)
+        {
+            if (request == null)
+            {
+                return BadRequest();
+            }
+
+            if (request.Id_User == Guid.Empty)
+            {
+                ModelState.AddModelError("Id", "ID_user can't be empty");
+            }
+            _userService.Update(request);
+            return Created("Update a user", true);
+        }
+
+        [HttpDelete]
+        public IActionResult Delete([FromBody] Guid Id_User)
+        {
+            if (Id_User == null)
+            {
+                return BadRequest();
+            }
+
+            _userService.Delete(Id_User);
+            return Created("Delete a user", true);
+        }
+
     }
 }
