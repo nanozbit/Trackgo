@@ -1,32 +1,34 @@
-version: "3.7" 
+version: "3.7"
 services:
-    postgres:
-        container_name: postgres
-        image: postgres
-        restart: always
-        environment:
-            POSTGRES_PASSWORD: "track4go"
-            PGDATA: /var/lib/postgresql/data/pgdata
-        ports:
-            - "15432:5432"
-        volumes:
-            - pgdata:/var/lib/postgresql/data
-        networks:
-            postgres_network:
-                aliases:
-                    - postgres_host
-    backend:
-         container_name: api
-         image: mcr.microsoft.com/dotnet/sdk
-         restart: always
-         ports:
-             - "5002:5001"
-         links: 
-         - postgres
-
-volumes: 
-    pgdata: {}
+  database:
+    build: ./Database
+    container_name: database
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: "track4go"
+      PGDATA: /var/lib/postgresql/data/pgdata
+    ports:
+      - "15432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - trackgo_net
+  backend:
+    build: ./Track4GoBackend
+    container_name: api
+    image: mcr.microsoft.com/dotnet/sdk:3.1-alpine
+    ports:
+      - "15001:5001"
+    volumes:
+      - apidata:/usr/src/Track4GoBackend
+    networks:
+      - trackgo_net
+volumes:
+  pgdata: {}
+  apidata: {}
 networks:
-    postgres_network:
-        name: trackgo_net
-        driver: bridge
+  trackgo_net:
+    external: true
+    name: trackgo_net
+    driver: bridge
