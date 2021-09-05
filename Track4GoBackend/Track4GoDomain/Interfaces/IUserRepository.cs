@@ -12,6 +12,6 @@ namespace Track4GoDomain.Interfaces
         public void Add(UserEntity userEntity);
 
         public void Update(UserEntity userEntity);
-        public void Delete(Guid Id_User);
+        public void Delete(UserEntity userEntity);
     }
 }

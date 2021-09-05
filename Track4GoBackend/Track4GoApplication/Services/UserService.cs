@@ -26,9 +26,10 @@ namespace Track4GoApplication.Services
             _userRepository.Add(userEntity);
         }
 
-        public void Delete(Guid Id_User)
+        public void Delete(UserViewModel request)
         {
-            _userRepository.Delete(Id_User);
+            var userEntity = _mapper.Map<UserViewModel, UserEntity>(request);
+            _userRepository.Delete(userEntity);
         }
 
         public IEnumerable<UserViewModel> GetUser()

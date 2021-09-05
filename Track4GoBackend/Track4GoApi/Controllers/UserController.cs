@@ -58,14 +58,14 @@ namespace Track4GoApi.Controllers
         }
 
         [HttpDelete]
-        public IActionResult Delete([FromBody] Guid Id_User)
+        public IActionResult Delete([FromBody]UserViewModel userViewModel)
         {
-            if (Id_User == null)
+            if (userViewModel == null)
             {
                 return BadRequest();
             }
 
-            _userService.Delete(Id_User);
+            _userService.Delete(userViewModel);
             return Created("Delete a user", true);
         }
 

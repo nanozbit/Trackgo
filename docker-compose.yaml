@@ -24,9 +24,24 @@ services:
       - apidata:/usr/src/Track4GoBackend
     networks:
       - trackgo_net
+    depends_on:
+        - database
+  frontend:
+      build: ./track4go-frontend
+      container_name: react
+      image: node:16-alpine3.13
+      ports:
+          - 3000:3000
+      volumes: 
+          - frontendata:/usr/src/react
+      networks:
+        - trackgo_net
+      depends_on:
+          - backend
 volumes:
   pgdata: {}
   apidata: {}
+  frontendata: {}
 networks:
   trackgo_net:
     external: true
