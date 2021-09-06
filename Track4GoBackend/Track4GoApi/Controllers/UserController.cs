@@ -14,17 +14,17 @@ namespace Track4GoApi.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
-        public UserController( IUserService userService)
+        public UserController(IUserService userService)
         {
             _userService = userService;
         }
-        
+
         [HttpGet]
         public IActionResult Get()
         {
             return Ok(_userService.GetUser());
         }
-        
+
         [HttpPost]
         public IActionResult Post([FromBody] UserViewModel request)
         {
@@ -33,7 +33,7 @@ namespace Track4GoApi.Controllers
                 return BadRequest();
             }
 
-            if(request.Id_User == Guid.Empty)
+            if (request.Id_User == Guid.Empty)
             {
                 ModelState.AddModelError("Id", "ID_user can't be empty");
             }
@@ -57,15 +57,18 @@ namespace Track4GoApi.Controllers
             return Created("Update a user", true);
         }
 
-        [HttpDelete]
-        public IActionResult Delete([FromBody]UserViewModel userViewModel)
+        [HttpDelete("{id}")]
+        public IActionResult Delete(Guid id)
         {
-            if (userViewModel == null)
+            if (id == null)
             {
                 return BadRequest();
             }
-
-            _userService.Delete(userViewModel);
+			if (id == Guid.Empty)
+            {
+                ModelState.AddModelError("Id", "ID_user can't be empty");
+            }
+            _userService.Delete(id);
             return Created("Delete a user", true);
         }
 

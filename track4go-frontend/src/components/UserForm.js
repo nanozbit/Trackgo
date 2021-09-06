@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 
 import axios from "axios";
 
-const url = "http://backend:5001/api/user";
+const url = "http://localhost:15001/api/user";
 export class UserForm extends Component {
   state = {
     data: [],
@@ -45,8 +45,10 @@ export class UserForm extends Component {
     console.log("Data save", sendData);
     if (sendData) {
       axios
-        .post(url, sendData)
-        .then()
+        .post(url, sendData, { crossdomain: true } )
+        .then(() => {
+			window.location.reload();
+		})
         .catch((error) => {
           console.log(error.message);
         });
@@ -58,8 +60,10 @@ export class UserForm extends Component {
     console.log("Data update", sendData);
     if (sendData) {
       axios
-        .put(url, sendData)
-        .then()
+        .put(url, sendData,  { crossdomain: true })
+        .then(()=> {
+			window.location.reload();
+		})
         .catch((error) => {
           console.log(error.message);
         });

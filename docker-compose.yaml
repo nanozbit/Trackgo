@@ -16,7 +16,8 @@ services:
       - trackgo_net
   backend:
     build: ./Track4GoBackend
-    container_name: api
+    container_name: backend
+    restart: always
     image: mcr.microsoft.com/dotnet/sdk:3.1-alpine
     ports:
       - "15001:5001"
@@ -28,8 +29,11 @@ services:
         - database
   frontend:
       build: ./track4go-frontend
-      container_name: react
+      container_name: frontend
+      restart: always
       image: node:16-alpine3.13
+      environment:
+          COMPOSE_HTTP_TIMEOUT: 500
       ports:
           - 3000:3000
       volumes: 

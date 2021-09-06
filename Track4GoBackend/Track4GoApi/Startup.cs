@@ -29,13 +29,16 @@ namespace Track4GoApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+			// .WithOrigins("http://frontend:3000")
 			  services.AddCors(options =>
 				 {
-					options.AddPolicy("AllowSpecificOrigin",
-						builder1 => builder1.WithOrigins("http://frontend:3000")
-						.AllowAnyHeader()
-														  .AllowAnyMethod());
+					options.AddPolicy("DefaultPolicy", builder => builder
+                    .AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader());
 				});
+			
+
             services.AddDbContext<UserContext>(options =>
             {
                 options.UseNpgsql(Configuration.GetConnectionString("Track4GoConnection"));
@@ -60,9 +63,9 @@ namespace Track4GoApi
             }
 
             app.UseHttpsRedirection();
-			app.UseCors("AllowSpecificOrigin");
             app.UseRouting();
-
+			
+			app.UseCors("DefaultPolicy");
             app.UseAuthorization();
             app.UseSwagger();
             app.UseSwaggerUI(c =>

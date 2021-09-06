@@ -5,7 +5,7 @@ import { faEdit, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
-const url = "http://backend:5001/api/user";
+const url = "http://localhost:15001/api/user";
 export class UserList extends Component {
   state = {
     data: [],
@@ -24,7 +24,7 @@ export class UserList extends Component {
 
   getUser = () => {
     axios
-      .get(url)
+      .get(url,{ crossdomain: true })
       .then((response) => {
         this.setState({ data: response.data });
       })
@@ -49,12 +49,14 @@ export class UserList extends Component {
     });
   };
 
-  delete = (user) => {
-    console.log(user);
+  remove = (user) => {
+    console.log("Valor a eliminar",user);
     if (user) {
       axios
-        .delete(url,user) 
-        .then()
+        .delete(`${url}/${user.id_User}`, { crossdomain: true }) 
+        .then( () => {
+				window.location.reload();
+		})
         .catch((error) => {
           console.log(error.message);
         });
@@ -103,7 +105,7 @@ export class UserList extends Component {
                   <button
                     className="btn btn-danger"
                     onClick={() => {
-                      this.delete(user.id_User);
+                      this.remove(user);
                     }}
                   >
                     <FontAwesomeIcon icon={faTrashAlt} />

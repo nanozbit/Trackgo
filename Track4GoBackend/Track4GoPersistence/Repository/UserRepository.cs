@@ -20,8 +20,11 @@ namespace Track4GoPersistence.Repository
            _userContext.SaveChanges();
         }
 
-        public void Delete(UserEntity userEntity)
+        public void Delete(Guid id)
         {
+			var userEntity  = new UserEntity {
+				Id_User = id
+			};
             _userContext.Remove(userEntity);
             _userContext.SaveChanges();
         }
